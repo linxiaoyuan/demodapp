@@ -1,103 +1,117 @@
 import './App.scss';
 import './trackers';
-import {THEME, TonConnectUIProvider} from "@tonconnect/ui-react";
-import {Footer} from "./components/Footer/Footer";
-import {Header} from "./components/Header/Header";
-import {TxForm} from "./components/TxForm/TxForm";
+import { useState, useEffect } from 'react';
+import { THEME, TonConnectUIProvider } from "@tonconnect/ui-react";
+import { Footer } from "./components/Footer/Footer";
+import { Header } from "./components/Header/Header";
+import { TxForm } from "./components/TxForm/TxForm";
 
-function App() {
-  return (
-    <TonConnectUIProvider
-      manifestUrl="https://ton-connect.github.io/demo-dapp-with-wallet/tonconnect-manifest.json"
-      uiPreferences={{theme: THEME.DARK}}
-      walletsListConfiguration={{
-        includeWallets: [
-          {
-            appName: "tonwallet",
-            name: "TON Wallet",
-            imageUrl: "https://wallet.ton.org/assets/ui/qr-logo.png",
-            aboutUrl: "https://chrome.google.com/webstore/detail/ton-wallet/nphplpgoakhhjchkkhmiggakijnkhfnd",
-            universalLink: "https://wallet.ton.org/ton-connect",
-            jsBridgeKey: "tonwallet",
-            bridgeUrl: "https://bridge.tonapi.io/bridge",
-            platforms: ["chrome", "android"]
-          },
-          {
-            appName: "nicegramWallet",
-            name: "Nicegram Wallet",
-            imageUrl: "https://static.nicegram.app/icon.png",
-            aboutUrl: "https://nicegram.app",
-            universalLink: "https://nicegram.app/tc",
-            deepLink: "nicegram-tc://",
-            jsBridgeKey: "nicegramWallet",
-            bridgeUrl: "https://bridge.tonapi.io/bridge",
-            platforms: ["ios", "android"]
-          },
-          {
-            appName: "binanceTonWeb3Wallet",
-            name: "Binance Web3 Wallet",
-            imageUrl: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAiIGhlaWdodD0iMzAiIHZpZXdCb3g9IjAgMCAzMCAzMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMwIiBoZWlnaHQ9IjMwIiBmaWxsPSIjMEIwRTExIi8+CjxwYXRoIGQ9Ik01IDE1TDcuMjU4MDYgMTIuNzQxOUw5LjUxNjEzIDE1TDcuMjU4MDYgMTcuMjU4MUw1IDE1WiIgZmlsbD0iI0YwQjkwQiIvPgo8cGF0aCBkPSJNOC44NzA5NyAxMS4xMjlMMTUgNUwyMS4xMjkgMTEuMTI5TDE4Ljg3MSAxMy4zODcxTDE1IDkuNTE2MTNMMTEuMTI5IDEzLjM4NzFMOC44NzA5NyAxMS4xMjlaIiBmaWxsPSIjRjBCOTBCIi8+CjxwYXRoIGQ9Ik0xMi43NDE5IDE1TDE1IDEyLjc0MTlMMTcuMjU4MSAxNUwxNSAxNy4yNTgxTDEyLjc0MTkgMTVaIiBmaWxsPSIjRjBCOTBCIi8+CjxwYXRoIGQ9Ik0xMS4xMjkgMTYuNjEyOUw4Ljg3MDk3IDE4Ljg3MUwxNSAyNUwyMS4xMjkgMTguODcxTDE4Ljg3MSAxNi42MTI5TDE1IDIwLjQ4MzlMMTEuMTI5IDE2LjYxMjlaIiBmaWxsPSIjRjBCOTBCIi8+CjxwYXRoIGQ9Ik0yMC40ODM5IDE1TDIyLjc0MTkgMTIuNzQxOUwyNSAxNUwyMi43NDE5IDE3LjI1ODFMMjAuNDgzOSAxNVoiIGZpbGw9IiNGMEI5MEIiLz4KPC9zdmc+Cg==",
-            aboutUrl: "https://www.binance.com/en/web3wallet",
-            deepLink: "bnc://app.binance.com/cedefi/ton-connect",
-            bridgeUrl: "https://bridge.tonapi.io/bridge",
-            platforms: ["chrome", "safari", "ios", "android"],
-            universalLink: "https://app.binance.com/cedefi/ton-connect"
-          },
-          {
-            appName: "fintopio-tg",
-            name: "Fintopio Telegram",
-            imageUrl: "https://fintopio.com/favicons/favicon-196x196.png",
-            aboutUrl: "https://fintopio.com",
-            universalLink: "https://t.me/fintopio?attach=wallet",
-            bridgeUrl: "https://wallet-bridge.fintopio.com/bridge",
-            platforms: ["ios", "android", "macos", "windows", "linux"]
-          },
-          {
-            appName: "okxTonWallet2",
-            name: "New OKX Wallet",
-            imageUrl:"https://static.okx.com/cdn/assets/imgs/247/58E63FEA47A2B7D7.png",
-            aboutUrl: "https://www.okx.com/web3",
-            universalLink: "https://www.okx.com/download?appendQuery=true&deeplink=okx://web3/wallet/tonconnect",
-            bridgeUrl: "https://www.okx.com/tonbridge/discover/rpc/bridge",
-            jsBridgeKey: "okxTonWallet",
-            platforms:[
-              "chrome",
-              "safari",
-              "firefox",
-              "ios",
-              "android"
-            ]
-          },
-          {
-            appName: "okxTonWalletTr2",
-            name: "New OKX TR Wallet",
-            imageUrl: "https://static.okx.com/cdn/assets/imgs/247/587A8296F0BB640F.png",
-            aboutUrl: "https://tr.okx.com/web3",
-            universalLink: "https://tr.okx.com/download?appendQuery=true&deeplink=okxtr://web3/wallet/tonconnect",
-            jsBridgeKey: "okxTonWallet",
-            bridgeUrl: "https://www.okx.com/tonbridge/discover/rpc/bridge",
-            platforms:[
-              "chrome",
-              "safari",
-              "firefox",
-              "ios",
-              "android"
-            ]
-          }
-        ]
-      }}
-      actionsConfiguration={{
-        twaReturnUrl: 'https://t.me/tc_twa_demo_bot/start'
-      }}
-    >
-      <div className="app">
-        <Header/>
-        <TxForm/>
-        {/*<TonProofDemo />*/}
-        <Footer/>
-      </div>
-    </TonConnectUIProvider>
-  )
+function isValidURL(string: string): boolean {
+  try {
+    new URL(string);
+    return true;
+  } catch (_) {
+    return false;
+  }
 }
 
-export default App
+function App() {
+  const [inputValue, setInputValue] = useState('');
+  const [storedValue, setStoredValue] = useState('');
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    const savedValue = localStorage.getItem('bridgeUrl');
+    if (savedValue) {
+      setInputValue(savedValue);
+      if (isValidURL(savedValue)) {
+        setStoredValue(savedValue);
+      }
+    }
+  }, []);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleButtonClick = () => {
+    if (isValidURL(inputValue)) {
+      setStoredValue(inputValue);
+    }
+    setShow(true)
+    localStorage.setItem('bridgeUrl', inputValue);
+    console.log('Saved OKX bridge URL:', inputValue);
+  };
+  const containerStyle: React.CSSProperties = {
+    display: 'flex',
+    flexDirection: 'column' as 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100vh',
+  };
+
+  const inputStyle: React.CSSProperties = {
+    padding: '10px',
+    margin: '10px',
+    fontSize: '16px',
+  };
+
+  const buttonStyle: React.CSSProperties = {
+    padding: '10px 20px',
+    margin: '10px',
+    fontSize: '16px',
+    cursor: 'pointer',
+  };
+
+  return (
+    <div className="app">
+      {!show ? (
+        <div style={containerStyle}>
+          <input
+            type="text"
+            value={inputValue}
+            onChange={handleInputChange}
+            style={inputStyle}
+            placeholder="Enter OKX Bridge URL"
+          />
+          <button onClick={handleButtonClick} style={buttonStyle}>Save OKX Bridge URL</button>
+        </div>
+      ) : (
+        <TonConnectUIProvider
+          manifestUrl="https://ton-connect.github.io/demo-dapp-with-wallet/tonconnect-manifest.json"
+          uiPreferences={{ theme: THEME.DARK }}
+          walletsListConfiguration={{
+            includeWallets: [
+              {
+                appName: "okxTonWallet2",
+                name: "New OKX Wallet",
+                imageUrl: "https://static.okx.com/cdn/assets/imgs/247/58E63FEA47A2B7D7.png",
+                aboutUrl: "https://www.okx.com/web3",
+                universalLink: "https://www.okx.com/download?appendQuery=true&deeplink=okx://web3/wallet/tonconnect",
+                bridgeUrl: "https://www.okx.com/tonbridge2/discover/rpc/bridge",
+                jsBridgeKey: "okxTonWallet",
+                platforms: [
+                  "chrome",
+                  "safari",
+                  "firefox",
+                  "ios",
+                  "android"
+                ]
+              }
+            ]
+          }}
+          actionsConfiguration={{
+            twaReturnUrl: 'https://t.me/tc_twa_demo_bot/start'
+          }}
+        >
+          <div className="app">
+            <TxForm />
+            {/* <TonProofDemo /> */}
+          </div>
+        </TonConnectUIProvider>
+      )}
+    </div>
+  );
+}
+
+export default App;
