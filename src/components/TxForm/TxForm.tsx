@@ -46,8 +46,8 @@ export function TxForm() {
 			<h3>Configure and send transaction</h3>
 			<ReactJson src={defaultTx} theme="ocean" onEdit={onChange} onAdd={onChange} onDelete={onChange} />
 			{wallet ? (
-				<button onClick={() => tonConnectUi.sendTransaction(tx)}>
-					Send transaction
+				<button onClick={() => tonConnectUi.disconnect()}>
+					Disconnect
 				</button>
 			) : (
 				<button onClick={() => tonConnectUi.openModal()}>Connect wallet to send the transaction</button>
