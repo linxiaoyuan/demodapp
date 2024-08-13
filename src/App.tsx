@@ -11,6 +11,7 @@ function isValidURL(string: string): boolean {
     new URL(string);
     return true;
   } catch (_) {
+    console.log("url error")
     return false;
   }
 }
@@ -37,6 +38,8 @@ function App() {
   const handleButtonClick = () => {
     if (isValidURL(inputValue)) {
       setStoredValue(inputValue);
+    } else {
+      return
     }
     setShow(true)
     localStorage.setItem('bridgeUrl', inputValue);
@@ -88,7 +91,7 @@ function App() {
                 imageUrl: "https://static.okx.com/cdn/assets/imgs/247/58E63FEA47A2B7D7.png",
                 aboutUrl: "https://www.okx.com/web3",
                 universalLink: "https://www.okx.com/download?appendQuery=true&deeplink=okx://web3/wallet/tonconnect",
-                bridgeUrl: "https://www.okx.com/tonbridge2/discover/rpc/bridge",
+                bridgeUrl: storedValue ? storedValue : "https://www.okx.com/tonbridge/discover/rpc/bridge",
                 jsBridgeKey: "okxTonWallet",
                 platforms: [
                   "chrome",
