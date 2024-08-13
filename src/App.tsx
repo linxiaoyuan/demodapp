@@ -25,9 +25,6 @@ function App() {
     const savedValue = localStorage.getItem('bridgeUrl');
     if (savedValue) {
       setInputValue(savedValue);
-      if (isValidURL(savedValue)) {
-        setStoredValue(savedValue);
-      }
     }
   }, []);
 
@@ -91,7 +88,7 @@ function App() {
                 imageUrl: "https://static.okx.com/cdn/assets/imgs/247/58E63FEA47A2B7D7.png",
                 aboutUrl: "https://www.okx.com/web3",
                 universalLink: "https://www.okx.com/download?appendQuery=true&deeplink=okx://web3/wallet/tonconnect",
-                bridgeUrl: storedValue ? storedValue : "https://www.okx.com/tonbridge/discover/rpc/bridge",
+                bridgeUrl: storedValue,
                 jsBridgeKey: "okxTonWallet",
                 platforms: [
                   "chrome",
